@@ -14,10 +14,22 @@
     </form>
     <br>
     <form action="/drive" method="post">
-        <input type="text" name="is_operational" value="1">
-        <input type="text" name="drive_mode" value="D">
-        <input type="text" name="speed" value="10.0">
-        <input type="text" name="angle" value="10.0">
+        <div class="label-group">
+            <label for="is_operational">is_operational</label>
+            <input type="text" name="is_operational" value="1">
+        </div>
+        <div class="label-group">
+            <label for="drive_mode">drive_mode</label>
+            <input type="text" name="drive_mode" value="D">
+        </div>
+        <div class="label-group">
+            <label for="speed">speed</label>
+            <input type="text" name="speed" value="10.0">
+        </div>
+        <div class="label-group">
+            <label for="angle">angle</label>
+            <input type="text" name="angle" value="10.0">
+        </div>
         <input type="submit" name="drive-button" value="drive-post">
     </form>
 </body>
