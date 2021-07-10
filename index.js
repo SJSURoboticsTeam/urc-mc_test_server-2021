@@ -5,6 +5,7 @@ const app = express();
 const port = 3000;
 
 app.use(express.json());
+app.use(express.urlencoded());
 app.use(express.static(__dirname + '/views'));
 
 app.set("views", "./views");
@@ -25,7 +26,8 @@ app.get("/", (req, res) => {
 });
 
 app.post("/ip", (req, res) => {
-  ip = req.body;
+  ip = req.body.ip_address;
+  console.log(`Obtained ip address: ${ip}`);
   res.redirect("/");
 });
 
