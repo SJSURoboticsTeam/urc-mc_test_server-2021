@@ -1,36 +1,31 @@
 const express = require("express");
-const path = require("path");
-const bent = require("bent");
-const app = express();
+const cors = require("cors");
+const os = require("os");
+
+const app = express().set("json spaces", 2);
 const port = 3000;
+const networkInterfaces = os.networkInterfaces();
+console.log(networkInterfaces);
 
-app.use(express.json());
-
-app.set("views", "./views");
-app.set("view engine", "ejs");
-
-let ip = "";
+app.use(cors({ origin: true, credentials: true }));
+app.use(express.json({ limit: "10mb", extended: false }));
+app.use(express.urlencoded({ extended: false }));
 
 var driveObject = {
   is_operational: 1,
-  drive_mode: "D",
-  speed: 10.0,
-  angle: 10.0,
+  drive_mode: "S",
+  speed: 5,
+  angle: 5,
 };
 
 app.get("/", (req, res) => {
-  // res.sendFile(__dirname + '/index.html');
-  res.render("index");
-});
-
-app.post("/ip", (req, res) => {
-  ip = req.body;
-  res.redirect("/");
+  res.send("Hello World");
 });
 
 app.get("/drive", (req, res) => {
-  console.log("/drive GET!");
-  res.json(driveObject);
+  console.log(driveObject);
+  // res.send(JSON.stringify(driveObject));
+  res.jsonp(driveObject);
 });
 
 app.post("/drive", (req, res) => {
@@ -41,10 +36,10 @@ app.post("/drive", (req, res) => {
   res.json({ driveObject });
 });
 
-app.post("/arm", (req, res) => {
-  console.log("arm post!");
-  res.redirect("/");
-});
+// app.post("/arm", (req, res) => {
+//   console.log("arm post!");
+//   res.redirect("/");
+// });
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
