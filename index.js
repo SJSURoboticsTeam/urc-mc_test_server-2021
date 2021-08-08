@@ -14,8 +14,8 @@ app.use(express.urlencoded({ extended: false }));
 var driveObject = {
   is_operational: 1,
   drive_mode: "S",
-  speed: 5,
-  angle: 5,
+  speed: 25,
+  angle: 15,
 };
 
 app.get("/", (req, res) => {
