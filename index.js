@@ -5,17 +5,17 @@ const os = require("os");
 const app = express().set("json spaces", 2);
 const port = 3000;
 const networkInterfaces = os.networkInterfaces();
-console.log(networkInterfaces);
+// console.log(networkInterfaces.wlp4s0);
 
-app.use(cors({ origin: true, credentials: true }));
-app.use(express.json({ limit: "10mb", extended: false }));
-app.use(express.urlencoded({ extended: false }));
+// app.use(cors({ origin: true, credentials: true }));
+app.use(express.json({ limit: "2mb", extended: false }));
+// app.use(express.urlencoded({ extended: false }));
 
 var driveObject = {
   is_operational: 1,
   drive_mode: "S",
-  speed: 25,
-  angle: 15,
+  speed: 10,
+  angle: 5,
 };
 
 app.get("/", (req, res) => {
@@ -42,5 +42,8 @@ app.post("/drive", (req, res) => {
 // });
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+  console.log(`Computer:\thttp://localhost:3000`);
+  console.log(
+    `Network:\thttp://${networkInterfaces.wlp4s0[0].address}:${port}`
+  );
 });
