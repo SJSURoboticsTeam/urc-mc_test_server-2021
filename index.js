@@ -1,14 +1,16 @@
 const express = require("express");
 const path = require("path");
 const bent = require("bent");
-const app = express();
+const os = require("os");
+
+const app = express().set("json spaces", 2);
 const port = 3000;
+const networkInterfaces = os.networkInterfaces();
+// console.log(networkInterfaces.wlp4s0);
 
-app.use(express.json());
-app.use(express.urlencoded());
-app.use(express.static(__dirname + '/views'));
-
-app.set("views", "./views");
+app.use(express.json({ limit: "2mb", extended: false }));
+app.use(express.urlencoded({ extended: false }));
+app.use(express.static(__dirname + "/views"));
 app.set("view engine", "ejs");
 
 let ip = "";
@@ -16,12 +18,11 @@ let ip = "";
 var driveObject = {
   is_operational: 1,
   drive_mode: "D",
-  speed: 10.0,
-  angle: 10.0,
+  speed: 0,
+  angle: 0,
 };
 
 app.get("/", (req, res) => {
-  // res.sendFile(__dirname + '/index.html');
   res.render("index");
 });
 
@@ -32,8 +33,8 @@ app.post("/ip", (req, res) => {
 });
 
 app.get("/drive", (req, res) => {
-  console.log("/drive GET!");
-  res.json(driveObject);
+  console.log(driveObject);
+  res.jsonp(driveObject);
 });
 
 app.post("/drive", (req, res) => {
@@ -41,7 +42,9 @@ app.post("/drive", (req, res) => {
   driveObject.drive_mode = req.body.drive_mode;
   driveObject.speed = req.body.speed;
   driveObject.angle = req.body.angle;
-  res.json({ driveObject });
+  console.log(driveObject);
+  // res.json({ driveObject });
+  res.redirect("/");
 });
 
 app.post("/arm", (req, res) => {
@@ -50,5 +53,8 @@ app.post("/arm", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+  console.log(`Computer:\thttp://localhost:3000`);
+  console.log(
+    `Network:\thttp://${networkInterfaces.wlp4s0[0].address}:${port}`
+  );
 });
