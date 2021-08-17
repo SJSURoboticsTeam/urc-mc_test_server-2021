@@ -1,24 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="index.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css" />
     <title>MC Test Server</title>
-</head>
-<body>
+  </head>
+  <body>
     <form action="/ip" method="post">
-        <input type="text" name="ip_address" value="">
-        <input type="submit" name="ip-button" value="ip-post">
+      <input type="text" name="ip_address" value="" />
+      <input type="submit" name="ip-button" value="ip-post" />
     </form>
-    <br>
+    <br />
     <form action="/drive" method="post">
-        <input type="text" name="is_operational" value="1">
-        <input type="text" name="drive_mode" value="D">
-        <input type="text" name="speed" value="10.0">
-        <input type="text" name="angle" value="10.0">
-        <input type="submit" name="drive-button" value="drive-post">
+      <div class="label-group">
+        <label for="is_operational">is_operational</label>
+        <input type="number" name="is_operational" value="1" />
+      </div>
+      <div class="label-group">
+        <label for="drive_mode">drive_mode</label>
+        <input type="text" name="drive_mode" value="D" />
+      </div>
+      <div class="label-group">
+        <label for="speed">speed</label>
+        <input type="number" name="speed" value="10" />
+      </div>
+      <div class="label-group">
+        <label for="angle">angle</label>
+        <input type="number" name="angle" value="10" />
+      </div>
+      <input type="submit" name="drive-button" value="drive-post" />
     </form>
-</body>
+  </body>
 </html>

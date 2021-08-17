@@ -1,5 +1,6 @@
 const express = require("express");
-const cors = require("cors");
+const path = require("path");
+const bent = require("bent");
 const os = require("os");
 
 const app = express().set("json spaces", 2);
@@ -7,24 +8,32 @@ const port = 3000;
 const networkInterfaces = os.networkInterfaces();
 // console.log(networkInterfaces.wlp4s0);
 
-// app.use(cors({ origin: true, credentials: true }));
 app.use(express.json({ limit: "2mb", extended: false }));
-// app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false }));
+app.use(express.static(__dirname + "/views"));
+app.set("view engine", "ejs");
+
+let ip = "";
 
 var driveObject = {
   is_operational: 1,
-  drive_mode: "S",
-  speed: 10,
-  angle: 5,
+  drive_mode: "D",
+  speed: 0,
+  angle: 0,
 };
 
 app.get("/", (req, res) => {
-  res.send("Hello World");
+  res.render("index");
+});
+
+app.post("/ip", (req, res) => {
+  ip = req.body.ip_address;
+  console.log(`Obtained ip address: ${ip}`);
+  res.redirect("/");
 });
 
 app.get("/drive", (req, res) => {
   console.log(driveObject);
-  // res.send(JSON.stringify(driveObject));
   res.jsonp(driveObject);
 });
 
@@ -33,13 +42,15 @@ app.post("/drive", (req, res) => {
   driveObject.drive_mode = req.body.drive_mode;
   driveObject.speed = req.body.speed;
   driveObject.angle = req.body.angle;
-  res.json({ driveObject });
+  console.log(driveObject);
+  // res.json({ driveObject });
+  res.redirect("/");
 });
 
-// app.post("/arm", (req, res) => {
-//   console.log("arm post!");
-//   res.redirect("/");
-// });
+app.post("/arm", (req, res) => {
+  console.log("arm post!");
+  res.redirect("/");
+});
 
 app.listen(port, () => {
   console.log(`Computer:\thttp://localhost:3000`);
